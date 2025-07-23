@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Karis School</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --primary-green: #4ECDC4;
+            --primary-blue: #45B7D1;
+            --primary-yellow: #FFA726;
+            --secondary-orange: #FF7043;
+            --dark-blue: #2C3E50;
+            --light-gray: #F8F9FA;
+            --white: #FFFFFF;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s ease;
+        }
+
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s ease;
+        }
+
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: var(--shadow);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary-blue);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary-blue);
+        }
+
+        .mobile-menu {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-orange));
+            color: white;
+            padding: 8rem 0 4rem;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .page-header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: slideDown 1s ease-out;
+        }
+
+        .page-header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            animation: slideUp 1s ease-out 0.3s both;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Sections */
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section:nth-child(even) {
+            background: var(--light-gray);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--dark-blue);
+            font-weight: 700;
+        }
+
+        /* Contact Content */
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
+        }
+
+        .contact-info {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .contact-info h3 {
+            color: var(--dark-blue);
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--light-gray);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .contact-details h4 {
+            color: var(--dark-blue);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .contact-details p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .contact-details a {
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+
+        .contact-details a:hover {
+            text-decoration: underline;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .contact-form h3 {
+            color: var(--dark-blue);
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark-blue);
+            font-size: 1rem;
+        }
+
+        .form-group input, 
+        .form-group select, 
+        .form-group textarea {
+            padding: 1rem;
+            border: 2px solid #E5E5E5;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-group input:focus, 
+        .form-group select:focus, 
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(69, 183, 209, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: var(--primary-blue);
+            color: white;
+            padding: 1.2rem 2.5rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: #3A9BC1;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        /* Map Section */
+        .map-section {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .map-section h3 {
+            color: var(--dark-blue);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 400px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            background: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        /* School Hours */
+        .school-hours {
+            background: linear-gradient(135deg, var(--dark-blue), var(--primary-blue));
+            color: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 4rem;
+        }
+
+        .school-hours h3 {
+            color: var(--primary-yellow);
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+
+        .hours-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .hours-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .hours-item h4 {
+            color: var(--primary-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .hours-item p {
+            opacity: 0.9;
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            background: var(--primary-green);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        /* Voice Assistant Button */
+        .voice-assistant {
+            position: fixed;
+            bottom: 120px;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: var(--primary-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .voice-assistant:hover {
+            transform: scale(1.1);
+            background: #45B393;
+        }
+
+        .voice-assistant.listening {
+            animation: pulse 1s infinite;
+            background: var(--secondary-orange);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Floating Elements */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            background: #22C55E;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 190px;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: var(--dark-blue);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-3px);
+            background: #243342;
+        }
+
+        /* Voice Status */
+        .voice-status {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            z-index: 2000;
+            display: none;
+        }
+
+        .voice-status.active {
+            display: block;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-blue);
+            color: white;
+            padding: 3rem 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-green);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: #CCC;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-green);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-3px);
+            background: #45B393;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #555;
+            color: #CCC;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .hours-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .section {
+                padding: 3rem 0;
+            }
+
+            .contact-info,
+            .contact-form,
+            .school-hours {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav class="nav">
+            <a href="index.html" class="logo">Karis School</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="admission.html">Admission</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="testimonials.html">Testimonials</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+            </ul>
+            <button class="mobile-menu">☰</button>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Contact Us</h1>
+            <p>We're here to help and answer any questions about your child's educational journey</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section">
+        <div class="container">
+            <div class="contact-content">
+                <div class="contact-info slide-in-left">
+                    <h3>Get in Touch</h3>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div class="contact-details">
+                            <h4>Our Location</h4>
+                            <p>15 Excellence Drive, Victoria Island<br>Lagos State, Nigeria<br>Adjacent to Lagos Business School</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <div class="contact-details">
+                            <h4>Phone Numbers</h4>
+                            <p>Main Office: <a href="tel:+2348012345678">+234 801 234 5678</a><br>
+                            Admissions: <a href="tel:+2348098765432">+234 809 876 5432</a><br>
+                            Emergency: <a href="tel:+2347012345678">+234 701 234 5678</a></p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">✉️</div>
+                        <div class="contact-details">
+                            <h4>Email Addresses</h4>
+                            <p>General Inquiries: <a href="mailto:info@karisschool.edu.ng">info@karisschool.edu.ng</a><br>
+                            Admissions: <a href="mailto:admissions@karisschool.edu.ng">admissions@karisschool.edu.ng</a><br>
+                            Principal: <a href="mailto:principal@karisschool.edu.ng">principal@karisschool.edu.ng</a></p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">🌐</div>
+                        <div class="contact-details">
+                            <h4>Social Media</h4>
+                            <p>Follow us for updates and school activities<br>
+                            Facebook: Karis School Lagos<br>
+                            Instagram: @karisschool_ng<br>
+                            WhatsApp: <a href="https://wa.me/2348012345678">+234 801 234 5678</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form slide-in-right">
+                    <h3>Send us a Message</h3>
+                    
+                    <div class="success-message" id="successMessage">
+                        ✅ Message sent successfully! We'll get back to you within 24 hours.
+                    </div>
+
+                    <form id="contactForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contactName">Your Name *</label>
+                                <input type="text" id="contactName" name="contactName" required placeholder="Enter your full name">
+                            </div>
+                            <div class="form-group">
+                                <label for="contactPhone">Phone Number *</label>
+                                <input type="tel" id="contactPhone" name="contactPhone" required placeholder="+234 XXX XXX XXXX">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contactEmail">Email Address *</label>
+                                <input type="email" id="contactEmail" name="contactEmail" required placeholder="Enter your email">
+                            </div>
+                            <div class="form-group">
+                                <label for="inquiryType">Inquiry Type</label>
+                                <select id="inquiryType" name="inquiryType">
+                                    <option value="general">General Information</option>
+                                    <option value="admission">Admission Inquiry</option>
+                                    <option value="parent">Parent Meeting Request</option>
+                                    <option value="complaint">Complaint/Feedback</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="childAge">Child's Age (if applicable)</label>
+                            <select id="childAge" name="childAge">
+                                <option value="">Select age range</option>
+                                <option value="2-3">2-3 years (Toddler)</option>
+                                <option value="3-4">3-4 years (Nursery 1)</option>
+                                <option value="4-5">4-5 years (Nursery 2)</option>
+                                <option value="5-6">5-6 years (Reception)</option>
+                                <option value="6-9">6-9 years (Primary 1-3)</option>
+                                <option value="9-12">9-12 years (Primary 4-6)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="contactMessage">Your Message *</label>
+                            <textarea id="contactMessage" name="contactMessage" required placeholder="Please tell us how we can help you..."></textarea>
+                        </div>
+
+                        <button type="submit" class="submit-btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- School Hours Section -->
+    <section class="section">
+        <div class="container">
+            <div class="school-hours fade-in">
+                <h3>School Hours & Visit Times</h3>
+                <div class="hours-grid">
+                    <div class="hours-item">
+                        <h4>Regular School Hours</h4>
+                        <p>Monday - Friday<br>7:30 AM - 3:30 PM</p>
+                    </div>
+                    <div class="hours-item">
+                        <h4>After-School Care</h4>
+                        <p>Monday - Friday<br>3:30 PM - 6:00 PM</p>
+                    </div>
+                    <div class="hours-item">
+                        <h4>Office Hours</h4>
+                        <p>Monday - Friday<br>7:00 AM - 5:00 PM<br>Saturday: 8:00 AM - 2:00 PM</p>
+                    </div>
+                    <div class="hours-item">
+                        <h4>School Visits</h4>
+                        <p>By Appointment Only<br>Monday - Saturday<br>Call to schedule</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="section">
+        <div class="container">
+            <div class="map-section fade-in">
+                <h3>Find Us on the Map</h3>
+                <div class="map-container">
+                    <p>🗺️ Interactive map will be embedded here<br>
+                    15 Excellence Drive, Victoria Island, Lagos<br>
+                    <a href="https://goo.gl/maps" target="_blank" style="color: var(--primary-blue);">View on Google Maps</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Karis School</h3>
+                    <p>Raising Children of Excellence Through Grace</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">📘</a>
+                        <a href="#" class="social-icon">📷</a>
+                        <a href="#" class="social-icon">💬</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="admission.html">Admission</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p>📍 15 Excellence Drive, Victoria Island, Lagos</p>
+                    <p>📞 +234 801 234 5678</p>
+                    <p>✉️ info@karisschool.edu.ng</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Karis School. All rights reserved. | Designed with ❤️ for Excellence</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Elements -->
+    <a href="https://wa.me/2348012345678" class="whatsapp-float" target="_blank">💬</a>
+    <button class="voice-assistant" id="voiceBtn">🎤</button>
+    <button class="back-to-top" id="backToTop">↑</button>
+
+    <!-- Voice Status -->
+    <div class="voice-status" id="voiceStatus">
+        <h3>🎤 Mave is Listening...</h3>
+        <p>Try saying: "Go to Home", "Open Admission", "Show Gallery", "View Events"</p>
+    </div>
+
+    <script>
+        // Animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            const backToTop = document.getElementById('backToTop');
+            
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+                backToTop.classList.add('visible');
+            } else {
+                header.classList.remove('scrolled');
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        // Back to top functionality
+        document.getElementById('backToTop').addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Contact Form Handler
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+
+            // Create WhatsApp message
+            const message = `📞 *KARIS SCHOOL CONTACT MESSAGE*
+
+👤 *Contact Information:*
+• Name: ${data.contactName}
+• Phone: ${data.contactPhone}
+• Email: ${data.contactEmail}
+• Inquiry Type: ${data.inquiryType}
+• Child's Age: ${data.childAge || 'Not specified'}
+
+💬 *Message:*
+${data.contactMessage}
+
+📅 *Sent on:* ${new Date().toLocaleDateString()}
+
+Thank you for contacting Karis School! We will respond to your inquiry within 24 hours.`;
+
+            // Encode message for WhatsApp
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappURL = `https://wa.me/2348012345678?text=${encodedMessage}`;
+
+            // Show success message
+            const successMessage = document.getElementById('successMessage');
+            successMessage.classList.add('show');
+
+            // Scroll to success message
+            successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            // Reset form after 2 seconds and redirect to WhatsApp
+            setTimeout(() => {
+                window.open(whatsappURL, '_blank');
+                this.reset();
+                successMessage.classList.remove('show');
+            }, 2000);
+        });
+
+        // Voice Assistant (Mave)
+        class VoiceAssistant {
+            constructor() {
+                this.recognition = null;
+                this.isListening = false;
+                this.init();
+            }
+
+            init() {
+                if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                    this.recognition = new SpeechRecognition();
+                    this.recognition.continuous = false;
+                    this.recognition.interimResults = false;
+                    this.recognition.lang = 'en-US';
+
+                    this.recognition.onstart = () => {
+                        this.isListening = true;
+                        document.getElementById('voiceBtn').classList.add('listening');
+                        document.getElementById('voiceStatus').classList.add('active');
+                    };
+
+                    this.recognition.onend = () => {
+                        this.isListening = false;
+                        document.getElementById('voiceBtn').classList.remove('listening');
+                        document.getElementById('voiceStatus').classList.remove('active');
+                    };
+
+                    this.recognition.onresult = (event) => {
+                        const command = event.results[0][0].transcript.toLowerCase();
+                        this.executeCommand(command);
+                    };
+
+                    this.recognition.onerror = (event) => {
+                        console.log('Speech recognition error:', event.error);
+                        this.isListening = false;
+                        document.getElementById('voiceBtn').classList.remove('listening');
+                        document.getElementById('voiceStatus').classList.remove('active');
+                    };
+                }
+            }
+
+            start() {
+                if (this.recognition && !this.isListening) {
+                    this.recognition.start();
+                }
+            }
+
+            executeCommand(command) {
+                console.log('Voice command:', command);
+                
+                if (command.includes('home') || command.includes('start')) {
+                    window.location.href = 'index.html';
+                } else if (command.includes('about') || command.includes('story')) {
+                    window.location.href = 'about.html';
+                } else if (command.includes('admission') || command.includes('apply')) {
+                    window.location.href = 'admission.html';
+                } else if (command.includes('gallery') || command.includes('photos')) {
+                    window.location.href = 'gallery.html';
+                } else if (command.includes('events') || command.includes('calendar')) {
+                    window.location.href = 'events.html';
+                } else if (command.includes('testimonial') || command.includes('review')) {
+                    window.location.href = 'testimonials.html';
+                } else if (command.includes('call') || command.includes('phone')) {
+                    window.location.href = 'tel:+2348012345678';
+                } else if (command.includes('email')) {
+                    window.location.href = 'mailto:info@karisschool.edu.ng';
+                } else {
+                    alert('Available commands: "Go to Home", "Open Admission", "Show Gallery", "View Events", "See Testimonials", "Call School", "Send Email"');
+                }
+            }
+        }
+
+        // Initialize voice assistant
+        const mave = new VoiceAssistant();
+        document.getElementById('voiceBtn').addEventListener('click', () => {
+            mave.start();
+        });
+
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu').addEventListener('click', function() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        // Page transition effects
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease-in-out';
+            
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+
+        // Navigation transition effects
+        document.querySelectorAll('a[href$=".html"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (!e.ctrlKey && !e.metaKey) {
+                    e.preventDefault();
+                    const href = this.getAttribute('href');
+                    
+                    document.body.style.opacity = '0';
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 300);
+                }
+            });
+        });
+
+        // Form validation enhancements
+        document.querySelectorAll('input[required], select[required], textarea[required]').forEach(field => {
+            field.addEventListener('blur', function() {
+                if (this.value.trim() === '') {
+                    this.style.borderColor = '#FF7043';
+                } else {
+                    this.style.borderColor = '#4ECDC4';
+                }
+            });
+        });
+
+        // Auto-focus on first form field
+        document.getElementById('contactName').focus();
+    </script>
+</body>
+</html>

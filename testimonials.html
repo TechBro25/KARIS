@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testimonials - Karis School</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --primary-green: #4ECDC4;
+            --primary-blue: #45B7D1;
+            --primary-yellow: #FFA726;
+            --secondary-orange: #FF7043;
+            --dark-blue: #2C3E50;
+            --light-gray: #F8F9FA;
+            --white: #FFFFFF;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: var(--shadow);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary-blue);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary-blue);
+        }
+
+        .mobile-menu {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-yellow));
+            color: white;
+            padding: 8rem 0 4rem;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .page-header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: slideDown 1s ease-out;
+        }
+
+        .page-header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            animation: slideUp 1s ease-out 0.3s both;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Sections */
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section:nth-child(even) {
+            background: var(--light-gray);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--dark-blue);
+            font-weight: 700;
+        }
+
+        /* Testimonials Carousel */
+        .testimonials-container {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .testimonial {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            display: none;
+            opacity: 0;
+            transform: translateX(100px);
+            transition: all 0.6s ease;
+        }
+
+        .testimonial.active {
+            display: block;
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .testimonial-content {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .testimonial-text {
+            font-size: 1.3rem;
+            font-style: italic;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+            color: #555;
+            position: relative;
+        }
+
+        .testimonial-text::before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--primary-blue);
+            position: absolute;
+            top: -1rem;
+            left: -2rem;
+            font-family: serif;
+        }
+
+        .testimonial-text::after {
+            content: '"';
+            font-size: 4rem;
+            color: var(--primary-blue);
+            position: absolute;
+            bottom: -2rem;
+            right: -2rem;
+            font-family: serif;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary-green);
+        }
+
+        .testimonial-info h4 {
+            font-size: 1.3rem;
+            color: var(--dark-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .testimonial-role {
+            color: var(--primary-blue);
+            font-weight: 500;
+        }
+
+        .testimonial-rating {
+            font-size: 1.5rem;
+            color: var(--primary-yellow);
+            margin-top: 1rem;
+        }
+
+        /* Navigation */
+        .testimonial-nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+
+        .nav-dot {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #DDD;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot.active {
+            background: var(--primary-blue);
+            transform: scale(1.2);
+        }
+
+        .testimonial-arrows {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .testimonial-arrows:hover {
+            background: #3A9BC1;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .prev-arrow {
+            left: -5rem;
+        }
+
+        .next-arrow {
+            right: -5rem;
+        }
+
+        /* Testimonials Grid */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .testimonial-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary-green);
+        }
+
+        .testimonial-card-text {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .testimonial-card-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .testimonial-card-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-green);
+        }
+
+        .testimonial-card-info h5 {
+            color: var(--dark-blue);
+            margin-bottom: 0.3rem;
+        }
+
+        .testimonial-card-role {
+            font-size: 0.9rem;
+            color: var(--primary-blue);
+        }
+
+        .testimonial-card-rating {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            color: var(--primary-yellow);
+        }
+
+        /* Statistics Section */
+        .stats-section {
+            background: linear-gradient(135deg, var(--dark-blue), var(--primary-blue));
+            color: white;
+            padding: 5rem 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .stat-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-yellow);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Voice Assistant Button */
+        .voice-assistant {
+            position: fixed;
+            bottom: 120px;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: var(--primary-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .voice-assistant:hover {
+            transform: scale(1.1);
+            background: #45B393;
+        }
+
+        .voice-assistant.listening {
+            animation: pulse 1s infinite;
+            background: var(--secondary-orange);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Floating Elements */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            background: #22C55E;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 190px;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: var(--dark-blue);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-3px);
+            background: #243342;
+        }
+
+        /* Voice Status */
+        .voice-status {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            z-index: 2000;
+            display: none;
+        }
+
+        .voice-status.active {
+            display: block;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-blue);
+            color: white;
+            padding: 3rem 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-green);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: #CCC;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-green);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-3px);
+            background: #45B393;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #555;
+            color: #CCC;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .testimonial-arrows {
+                display: none;
+            }
+
+            .testimonial-text {
+                font-size: 1.1rem;
+            }
+
+            .testimonial-text::before,
+            .testimonial-text::after {
+                display: none;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .section {
+                padding: 3rem 0;
+            }
+
+            .testimonial {
+                padding: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav class="nav">
+            <a href="index.html" class="logo">Karis School</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="admission.html">Admission</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="testimonials.html" class="active">Testimonials</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <button class="mobile-menu">☰</button>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Parent Testimonials</h1>
+            <p>Hear what parents say about their children's experience at Karis School</p>
+        </div>
+    </section>
+
+    <!-- Featured Testimonials Carousel -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title fade-in">What Parents Are Saying</h2>
+            <div class="testimonials-container fade-in">
+                <button class="testimonial-arrows prev-arrow" onclick="prevTestimonial()">‹</button>
+                <button class="testimonial-arrows next-arrow" onclick="nextTestimonial()">›</button>
+
+                <div class="testimonial active" id="testimonial-0">
+                    <div class="testimonial-content">
+                        <p class="testimonial-text">Karis School has been a blessing to our family. My daughter Sarah was shy when she started in Nursery 1, but the teachers' patience and love helped her blossom into a confident little girl. The small class sizes mean she gets personal attention, and I love how they incorporate Christian values into daily learning. Sarah comes home excited about what she learned each day!</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://images.pexels.com/photos/5212317/pexels-photo-5212317.jpeg?auto=compress&cs=tinysrgb&w=160&h=160&fit=crop" alt="Mrs. Adebayo" class="testimonial-avatar">
+                        <div class="testimonial-info">
+                            <h4>Mrs. Folake Adebayo</h4>
+                            <p class="testimonial-role">Parent of Sarah (Nursery 2)</p>
+                        </div>
+                    </div>
+                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                </div>
+
+                <div class="testimonial" id="testimonial-1">
+                    <div class="testimonial-content">
+                        <p class="testimonial-text">I can't express how grateful I am for Karis School. My son David has been there since Toddler class, and now in Primary 3, he's reading above his grade level and shows such enthusiasm for learning. The teachers genuinely care about each child's development. The school environment is safe, nurturing, and feels like a second home. I recommend Karis School to every parent!</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://images.pexels.com/photos/8613059/pexels-photo-8613059.jpeg?auto=compress&cs=tinysrgb&w=160&h=160&fit=crop" alt="Mr. Okafor" class="testimonial-avatar">
+                        <div class="testimonial-info">
+                            <h4>Mr. Emmanuel Okafor</h4>
+                            <p class="testimonial-role">Parent of David (Primary 3)</p>
+                        </div>
+                    </div>
+                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                </div>
+
+                <div class="testimonial" id="testimonial-2">
+                    <div class="testimonial-content">
+                        <p class="testimonial-text">Choosing Karis School for my twins was the best decision I made. The school's approach to early childhood education is outstanding. My children learned to read, write, and do basic math in such a fun and engaging way. The teachers use creative methods that make learning enjoyable. Both Joy and Peace are now confident, well-behaved children who love school. The Christian foundation is exactly what we wanted for our family.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://images.pexels.com/photos/8363030/pexels-photo-8363030.jpeg?auto=compress&cs=tinysrgb&w=160&h=160&fit=crop" alt="Mrs. Uzoma" class="testimonial-avatar">
+                        <div class="testimonial-info">
+                            <h4>Mrs. Grace Uzoma</h4>
+                            <p class="testimonial-role">Parent of Joy & Peace (Primary 1)</p>
+                        </div>
+                    </div>
+                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                </div>
+
+                <div class="testimonial" id="testimonial-3">
+                    <div class="testimonial-content">
+                        <p class="testimonial-text">As a working mother, I needed a school I could trust completely with my precious daughter. Karis School exceeded all my expectations. The communication between teachers and parents is excellent - I always know what's happening with Blessing's progress. The school handles everything from academics to character building beautifully. My daughter is happy, healthy, and thriving!</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://images.pexels.com/photos/8923181/pexels-photo-8923181.jpeg?auto=compress&cs=tinysrgb&w=160&h=160&fit=crop" alt="Mrs. Johnson" class="testimonial-avatar">
+                        <div class="testimonial-info">
+                            <h4>Mrs. Chioma Johnson</h4>
+                            <p class="testimonial-role">Parent of Blessing (Reception)</p>
+                        </div>
+                    </div>
+                    <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                </div>
+
+                <div class="testimonial-nav">
+                    <span class="nav-dot active" onclick="showTestimonial(0)"></span>
+                    <span class="nav-dot" onclick="showTestimonial(1)"></span>
+                    <span class="nav-dot" onclick="showTestimonial(2)"></span>
+                    <span class="nav-dot" onclick="showTestimonial(3)"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- More Testimonials Grid -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title fade-in">More Happy Parents</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card fade-in">
+                    <div class="testimonial-card-rating">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-card-text">"The teachers at Karis School are amazing! They treat each child with such love and patience. My son Michael has grown so much in confidence and social skills since starting here."</p>
+                    <div class="testimonial-card-author">
+                        <img src="https://images.pexels.com/photos/8613034/pexels-photo-8613034.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop" alt="Mrs. Adeolu" class="testimonial-card-avatar">
+                        <div class="testimonial-card-info">
+                            <h5>Mrs. Kemi Adeolu</h5>
+                            <p class="testimonial-card-role">Parent of Michael (Nursery 1)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card fade-in">
+                    <div class="testimonial-card-rating">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-card-text">"The curriculum is well-balanced and age-appropriate. My daughter enjoys art time, story time, and playground activities. She's learning while having fun, which is exactly what I wanted."</p>
+                    <div class="testimonial-card-author">
+                        <img src="https://images.pexels.com/photos/8364024/pexels-photo-8364024.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop" alt="Dr. Okoli" class="testimonial-card-avatar">
+                        <div class="testimonial-card-info">
+                            <h5>Dr. Amaka Okoli</h5>
+                            <p class="testimonial-card-role">Parent of Chiamaka (Primary 2)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card fade-in">
+                    <div class="testimonial-card-rating">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-card-text">"Safety is my top priority, and Karis School provides a secure environment where I feel comfortable leaving my child. The facilities are clean and child-friendly."</p>
+                    <div class="testimonial-card-author">
+                        <img src="https://images.pexels.com/photos/8613093/pexels-photo-8613093.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop" alt="Mr. Bello" class="testimonial-card-avatar">
+                        <div class="testimonial-card-info">
+                            <h5>Mr. Tunde Bello</h5>
+                            <p class="testimonial-card-role">Parent of Ayomide (Primary 4)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card fade-in">
+                    <div class="testimonial-card-rating">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-card-text">"What I love most is how the school incorporates moral values and character building. My son is not just academically prepared but also growing into a well-rounded young man."</p>
+                    <div class="testimonial-card-author">
+                        <img src="https://images.pexels.com/photos/5212317/pexels-photo-5212317.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop" alt="Mrs. Eze" class="testimonial-card-avatar">
+                        <div class="testimonial-card-info">
+                            <h5>Mrs. Patience Eze</h5>
+                            <p class="testimonial-card-role">Parent of Chukwudi (Primary 6)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="stats-section">
+        <div class="container">
+            <h2 class="section-title fade-in" style="color: white;">Parent Satisfaction</h2>
+            <div class="stats-grid">
+                <div class="stat-card fade-in">
+                    <div class="stat-icon">😊</div>
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Parent Satisfaction</div>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-icon">🎓</div>
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">School Readiness Rate</div>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-icon">👨‍👩‍👧‍👦</div>
+                    <div class="stat-number">250+</div>
+                    <div class="stat-label">Happy Families</div>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-icon">⭐</div>
+                    <div class="stat-number">4.9</div>
+                    <div class="stat-label">Average Rating</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Karis School</h3>
+                    <p>Raising Children of Excellence Through Grace</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">📘</a>
+                        <a href="#" class="social-icon">📷</a>
+                        <a href="#" class="social-icon">💬</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="admission.html">Admission</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p>📍 15 Excellence Drive, Victoria Island, Lagos</p>
+                    <p>📞 +234 801 234 5678</p>
+                    <p>✉️ info@karisschool.edu.ng</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Karis School. All rights reserved. | Designed with ❤️ for Excellence</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Elements -->
+    <a href="https://wa.me/2348012345678" class="whatsapp-float" target="_blank">💬</a>
+    <button class="voice-assistant" id="voiceBtn">🎤</button>
+    <button class="back-to-top" id="backToTop">↑</button>
+
+    <!-- Voice Status -->
+    <div class="voice-status" id="voiceStatus">
+        <h3>🎤 Mave is Listening...</h3>
+        <p>Try saying: "Go to Home", "Open Admission", "Show Gallery", "Contact School"</p>
+    </div>
+
+    <script>
+        let currentTestimonial = 0;
+        const totalTestimonials = 4;
+
+        // Animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            const backToTop = document.getElementById('backToTop');
+            
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+                backToTop.classList.add('visible');
+            } else {
+                header.classList.remove('scrolled');
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        // Back to top functionality
+        document.getElementById('backToTop').addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Testimonial carousel functions
+        function showTestimonial(index) {
+            // Hide all testimonials
+            document.querySelectorAll('.testimonial').forEach(t => {
+                t.classList.remove('active');
+            });
+            
+            // Remove active from all dots
+            document.querySelectorAll('.nav-dot').forEach(dot => {
+                dot.classList.remove('active');
+            });
+            
+            // Show selected testimonial
+            document.getElementById(`testimonial-${index}`).classList.add('active');
+            document.querySelectorAll('.nav-dot')[index].classList.add('active');
+            
+            currentTestimonial = index;
+        }
+
+        function nextTestimonial() {
+            currentTestimonial = (currentTestimonial + 1) % totalTestimonials;
+            showTestimonial(currentTestimonial);
+        }
+
+        function prevTestimonial() {
+            currentTestimonial = (currentTestimonial - 1 + totalTestimonials) % totalTestimonials;
+            showTestimonial(currentTestimonial);
+        }
+
+        // Auto-rotate testimonials
+        setInterval(nextTestimonial, 6000);
+
+        // Voice Assistant (Mave)
+        class VoiceAssistant {
+            constructor() {
+                this.recognition = null;
+                this.isListening = false;
+                this.init();
+            }
+
+            init() {
+                if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                    this.recognition = new SpeechRecognition();
+                    this.recognition.continuous = false;
+                    this.recognition.interimResults = false;
+                    this.recognition.lang = 'en-US';
+
+                    this.recognition.onstart = () => {
+                        this.isListening = true;
+                        document.getElementById('voiceBtn').classList.add('listening');
+                        document.getElementById('voiceStatus').classList.add('active');
+                    };
+
+                    this.recognition.onend = () => {
+                        this.isListening = false;
+                        document.getElementById('voiceBtn').classList.remove('listening');
+                        document.getElementById('voiceStatus').classList.remove('active');
+                    };
+
+                    this.recognition.onresult = (event) => {
+                        const command = event.results[0][0].transcript.toLowerCase();
+                        this.executeCommand(command);
+                    };
+
+                    this.recognition.onerror = (event) => {
+                        console.log('Speech recognition error:', event.error);
+                        this.isListening = false;
+                        document.getElementById('voiceBtn').classList.remove('listening');
+                        document.getElementById('voiceStatus').classList.remove('active');
+                    };
+                }
+            }
+
+            start() {
+                if (this.recognition && !this.isListening) {
+                    this.recognition.start();
+                }
+            }
+
+            executeCommand(command) {
+                console.log('Voice command:', command);
+                
+                if (command.includes('home') || command.includes('start')) {
+                    window.location.href = 'index.html';
+                } else if (command.includes('about') || command.includes('story')) {
+                    window.location.href = 'about.html';
+                } else if (command.includes('admission') || command.includes('apply')) {
+                    window.location.href = 'admission.html';
+                } else if (command.includes('gallery') || command.includes('photos')) {
+                    window.location.href = 'gallery.html';
+                } else if (command.includes('events') || command.includes('calendar')) {
+                    window.location.href = 'events.html';
+                } else if (command.includes('contact') || command.includes('call')) {
+                    window.location.href = 'contact.html';
+                } else if (command.includes('next testimonial')) {
+                    nextTestimonial();
+                } else if (command.includes('previous testimonial')) {
+                    prevTestimonial();
+                } else {
+                    alert('Available commands: "Go to Home", "Open Admission", "Show Gallery", "View Events", "Contact School", "Next Testimonial"');
+                }
+            }
+        }
+
+        // Initialize voice assistant
+        const mave = new VoiceAssistant();
+        document.getElementById('voiceBtn').addEventListener('click', () => {
+            mave.start();
+        });
+
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu').addEventListener('click', function() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        // Page transition effects
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease-in-out';
+            
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+
+        // Navigation transition effects
+        document.querySelectorAll('a[href$=".html"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (!e.ctrlKey && !e.metaKey) {
+                    e.preventDefault();
+                    const href = this.getAttribute('href');
+                    
+                    document.body.style.opacity = '0';
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 300);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
